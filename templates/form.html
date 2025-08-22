@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>BikeAdvisor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        select, input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 30px;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #45a049;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dobierz rower</h1>
+    <form method="POST" onsubmit="showLoading()">
+        <div class="form-group">
+            <label for="uzytkownik">Kto użytkuje?</label>
+            <select name="uzytkownik" id="uzytkownik">
+                <option value="mezczyzna">Mężczyzna</option>
+                <option value="kobieta">Kobieta</option>
+                <option value="dziecko">Dziecko</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="budzet">Jaki jest Twój budżet (PLN)?</label>
+            <input type="text" name="budzet" id="budzet" value="1000">
+        </div>
+
+        <div class="form-group">
+            <label for="cel">Do jakich celów będziesz używać roweru?</label>
+            <select name="cel" id="cel">
+                <option value="rekreacja">Rekreacja</option>
+                <option value="sport">Sport</option>
+                <option value="dojazdy">Dojazdy do pracy</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="czestotliwosc">Jak często planujesz jeździć?</label>
+            <select name="czestotliwosc" id="czestotliwosc">
+                <option value="codziennie">Codziennie</option>
+                <option value="kilka_razy_w_tygodniu">Kilka razy w tygodniu</option>
+                <option value="raz_na_miesiac">Raz na miesiąc</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="teren">Po jakim terenie będziesz głównie jeździć?</label>
+            <select name="teren" id="teren">
+                <option value="asfalt">Asfalt</option>
+                <option value="szuter">Szuter</option>
+                <option value="teren">Teren</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="doswiadczenie">Jakie masz doświadczenie w jeździe na rowerze?</label>
+            <select name="doswiadczenie" id="doswiadczenie">
+                <option value="poczatkujacy">Początkujący</option>
+                <option value="sredniozaawansowany">Średniozaawansowany</option>
+                <option value="zaawansowany">Zaawansowany</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="pogoda">W jakich warunkach pogodowych planujesz jeździć?</label>
+            <select name="pogoda" id="pogoda">
+                <option value="Kazdych">Każdych</option>
+                <option value="proste">Tylko w słoneczne dni</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dystans">Jaką odległość planujesz pokonywać podczas typowej przejażdżki? (km)</label>
+            <input type="text" name="dystans" id="dystans" value="15">
+        </div>
+
+        <input type="submit" value="Wyślij">
+        <div id="loading">⏳ Asystent analizuje Twoje potrzeby i szuka rowerów...</div>
+    </form>
+
+    {% if wynik %}
+        <div style="margin-top: 30px; padding: 20px; background-color: #e7f3fe; border-left: 5px solid #2196F3; border-radius: 4px;">
+            <h2 style="margin-bottom: 15px;">Proponowane rowery</h2>
+            <p style="line-height: 1.6;">{{ wynik | safe }}</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    function showLoading() {
+        document.getElementById("loading").style.display = "block";
+    }
+</script>
+</body>
+</html>
